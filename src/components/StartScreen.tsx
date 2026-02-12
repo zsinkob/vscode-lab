@@ -97,30 +97,35 @@ export function StartScreen({ onStart }: StartScreenProps) {
       <div className="absolute inset-0 pointer-events-none z-0">
         {elegantStickers.map((sticker, index) => {
           const colors = stickerColors[sticker.color as keyof typeof stickerColors];
-          const positionStyle: React.CSSProperties = {
+          const isCentered = sticker.left === '50%';
+          
+          const wrapperStyle: React.CSSProperties = {
             position: 'absolute',
-            width: `${sticker.size}px`,
-            height: `${sticker.size}px`,
             ...(sticker.top && { top: sticker.top }),
             ...(sticker.bottom && { bottom: sticker.bottom }),
             ...(sticker.left && { left: sticker.left }),
             ...(sticker.right && { right: sticker.right }),
-            ...(sticker.left === '50%' && { transform: 'translateX(-50%)' }),
+            ...(isCentered && { transform: 'translateX(-50%)' }),
+          };
+
+          const stickerStyle: React.CSSProperties = {
+            width: `${sticker.size}px`,
+            height: `${sticker.size}px`,
+            background: `linear-gradient(145deg, ${colors.light} 0%, ${colors.mid} 50%, ${colors.dark} 100%)`,
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+            border: '3px solid rgba(255, 255, 255, 0.2)',
+            opacity: index % 2 === 0 ? 0.9 : 0.85,
+            animation: `float-gentle 7s ease-in-out infinite ${sticker.floatDelay}, rotate-slow 9s ease-in-out infinite ${sticker.rotateDelay}`,
           };
 
           return (
             <div
               key={index}
-              className={`rounded-2xl ${sticker.hideOnMobile ? 'hidden md:block' : ''}`}
-              style={{
-                ...positionStyle,
-                background: `linear-gradient(145deg, ${colors.light} 0%, ${colors.mid} 50%, ${colors.dark} 100%)`,
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
-                border: '3px solid rgba(255, 255, 255, 0.2)',
-                opacity: index % 2 === 0 ? 0.9 : 0.85,
-                animation: `float-gentle 7s ease-in-out infinite ${sticker.floatDelay}, rotate-slow 9s ease-in-out infinite ${sticker.rotateDelay}`,
-              }}
-            />
+              style={wrapperStyle}
+              className={sticker.hideOnMobile ? 'hidden md:block' : ''}
+            >
+              <div className="rounded-2xl" style={stickerStyle} />
+            </div>
           );
         })}
       </div>
@@ -135,7 +140,7 @@ export function StartScreen({ onStart }: StartScreenProps) {
           }}
         >
           <h1
-            className="text-5xl md:text-5xl font-bold mb-3"
+            className="text-5xl font-bold mb-3"
             style={{
               fontFamily: 'var(--font-display)',
               color: '#fbbf24',
@@ -227,15 +232,15 @@ export function StartScreen({ onStart }: StartScreenProps) {
               animation: 'shimmer-subtle 3s ease-in-out infinite',
               maxWidth: '20rem',
             }}
-            onMouseDown={(e) => {
+            onPointerDown={(e) => {
               e.currentTarget.style.transform = 'translateY(2px)';
               e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 3px 5px rgba(0, 0, 0, 0.15)';
             }}
-            onMouseUp={(e) => {
+            onPointerUp={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
             }}
-            onMouseLeave={(e) => {
+            onPointerLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
             }}
