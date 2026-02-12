@@ -2,6 +2,26 @@ interface StartScreenProps {
   onStart: () => void;
 }
 
+// Constants for stamp overlay positioning (centered within sticker)
+const STAMP_SIZE_PERCENT = 85; // Stamp is 85% of sticker size
+const STAMP_OFFSET_PERCENT = (100 - STAMP_SIZE_PERCENT) / 2; // Center the stamp
+
+// Constants for varied rotation angles
+const ROTATION_MULTIPLIER = 17; // Prime number for good distribution
+const ROTATION_MAX_DEGREES = 360;
+const ROTATION_OFFSET = -15; // Slight tilt for organic feel
+
+// Helper to determine animation for each sticker based on ID
+function getStickerAnimation(stickerId: number): string {
+  const remainder = stickerId % 3;
+  if (remainder === 0) {
+    return 'float-chaotic 3.5s ease-in-out infinite, spin-playful 7s linear infinite';
+  } else if (remainder === 1) {
+    return 'float-chaotic 3.5s ease-in-out infinite, bounce-continuous 2s ease-in-out infinite';
+  }
+  return 'float-chaotic 3.5s ease-in-out infinite';
+}
+
 // Sticker configurations for floating decorative elements
 const stickers = [
   // Blue stickers
@@ -35,7 +55,7 @@ export function StartScreen({ onStart }: StartScreenProps) {
       <div className="absolute inset-0 pointer-events-none">
         {stickers.map((sticker) => {
           const palette = colorPalettes[sticker.color as keyof typeof colorPalettes];
-          const rotation = (sticker.id * 17) % 360 - 15; // Varied rotation angles
+          const rotation = (sticker.id * ROTATION_MULTIPLIER) % ROTATION_MAX_DEGREES + ROTATION_OFFSET;
           
           return (
             <div
@@ -50,7 +70,7 @@ export function StartScreen({ onStart }: StartScreenProps) {
                 background: `linear-gradient(145deg, ${palette.light} 0%, ${palette.mid} 50%, ${palette.dark} 100%)`,
                 border: `3px solid ${palette.dark}`,
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
-                animation: `float-chaotic 3.5s ease-in-out infinite, ${sticker.id % 3 === 0 ? 'spin-playful 7s linear infinite' : sticker.id % 3 === 1 ? 'bounce-continuous 2s ease-in-out infinite' : ''}`,
+                animation: getStickerAnimation(sticker.id),
                 animationDelay: sticker.animDelay,
                 zIndex: 1,
               }}
@@ -61,10 +81,10 @@ export function StartScreen({ onStart }: StartScreenProps) {
                   style={{
                     background: 'radial-gradient(circle, rgba(220, 38, 38, 0.85) 0%, rgba(220, 38, 38, 0.7) 60%, transparent 100%)',
                     transform: `rotate(${rotation}deg)`,
-                    width: '85%',
-                    height: '85%',
-                    top: '7.5%',
-                    left: '7.5%',
+                    width: `${STAMP_SIZE_PERCENT}%`,
+                    height: `${STAMP_SIZE_PERCENT}%`,
+                    top: `${STAMP_OFFSET_PERCENT}%`,
+                    left: `${STAMP_OFFSET_PERCENT}%`,
                     borderRadius: '50%',
                   }}
                 >
