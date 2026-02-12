@@ -17,33 +17,85 @@ export function GameScreen({
   onReset,
 }: GameScreenProps) {
   return (
-    <div className="flex flex-col min-h-full bg-gray-50">
-      {/* Header */}
-      <header className="flex items-center justify-between p-3 bg-white border-b border-gray-200">
+    <div className="relative flex flex-col min-h-full">
+      {/* Raised header bar */}
+      <header 
+        className="relative flex items-center justify-between p-3 z-20"
+        style={{
+          background: 'linear-gradient(145deg, #4b5563 0%, #374151 50%, #1f2937 100%)',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+          borderBottom: '2px solid #111827',
+        }}
+      >
         <button
           onClick={onReset}
-          className="text-gray-500 text-sm px-3 py-1.5 rounded active:bg-gray-100"
+          className="text-sm px-3 py-1.5 rounded-lg font-semibold transition-all duration-150"
+          style={{
+            background: 'linear-gradient(145deg, #6b7280 0%, #4b5563 100%)',
+            color: '#f3f4f6',
+            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+            border: '2px solid #374151',
+          }}
+          onMouseDown={(e) => {
+            e.currentTarget.style.transform = 'translateY(2px)';
+            e.currentTarget.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.3), inset 0 2px 3px rgba(0, 0, 0, 0.2)';
+          }}
+          onMouseUp={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+          }}
         >
           ← Back
         </button>
-        <h1 className="font-bold text-gray-900">Soc Ops</h1>
+        <h1 
+          className="font-bold text-xl"
+          style={{
+            fontFamily: 'var(--font-display)',
+            color: '#fbbf24',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+          }}
+        >
+          Soc Ops
+        </h1>
         <div className="w-16"></div>
       </header>
 
       {/* Instructions */}
-      <p className="text-center text-gray-500 text-sm py-2 px-4">
+      <p 
+        className="relative z-10 text-center text-sm py-3 px-4 font-semibold"
+        style={{
+          color: '#d1d5db',
+          textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
+        }}
+      >
         Tap a square when you find someone who matches it.
       </p>
 
-      {/* Bingo indicator */}
+      {/* Bingo ribbon */}
       {hasBingo && (
-        <div className="bg-amber-100 text-amber-800 text-center py-2 font-semibold text-sm">
-          🎉 BINGO! You got a line!
+        <div 
+          className="relative z-10 text-center py-2.5 font-bold text-base"
+          style={{
+            fontFamily: 'var(--font-display)',
+            background: 'linear-gradient(145deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
+            color: '#78350f',
+            textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.2)',
+            borderTop: '2px solid #d97706',
+            borderBottom: '2px solid #d97706',
+          }}
+        >
+          🎉 BINGO! You got a line! 🎉
         </div>
       )}
 
       {/* Board */}
-      <div className="flex-1 flex items-center justify-center p-3">
+      <div className="relative z-10 flex-1 flex items-center justify-center p-3">
         <BingoBoard
           board={board}
           winningSquareIds={winningSquareIds}

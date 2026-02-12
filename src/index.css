@@ -1,11 +1,52 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-accent: #2563eb;
-  --color-accent-light: #3b82f6;
-  --color-marked: #dcfce7;
-  --color-marked-border: #22c55e;
-  --color-bingo: #fbbf24;
+  /* Sticker colors - glossy gradient pairs */
+  --color-sticker-yellow-light: #fef3c7;
+  --color-sticker-yellow: #fbbf24;
+  --color-sticker-yellow-dark: #d97706;
+  
+  --color-sticker-blue-light: #dbeafe;
+  --color-sticker-blue: #3b82f6;
+  --color-sticker-blue-dark: #1e40af;
+  
+  --color-sticker-pink-light: #fce7f3;
+  --color-sticker-pink: #ec4899;
+  --color-sticker-pink-dark: #be185d;
+  
+  --color-sticker-green-light: #d1fae5;
+  --color-sticker-green: #10b981;
+  --color-sticker-green-dark: #047857;
+  
+  --color-sticker-purple-light: #e9d5ff;
+  --color-sticker-purple: #a855f7;
+  --color-sticker-purple-dark: #7e22ce;
+  
+  /* Stamp ink colors */
+  --color-stamp-red: #dc2626;
+  --color-stamp-blue: #1e40af;
+  --color-stamp-purple: #7e22ce;
+  
+  /* Fabric/felt texture colors */
+  --color-fabric-base: #2d3748;
+  --color-fabric-light: #4a5568;
+  --color-fabric-dark: #1a202c;
+  
+  /* Metallic for free space */
+  --color-metallic-gold: #f59e0b;
+  --color-metallic-gold-light: #fbbf24;
+  --color-metallic-gold-dark: #d97706;
+  
+  /* Shadows */
+  --shadow-sticker-raised: 0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  --shadow-sticker-pressed: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-button-raised: 0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2);
+  --shadow-button-pressed: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 3px 5px rgba(0, 0, 0, 0.15);
+  --shadow-panel: 0 10px 25px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2);
+  
+  /* Playful fonts */
+  --font-display: "Comic Sans MS", "Chalkboard SE", "Bradley Hand", cursive;
+  --font-body: "Verdana", "Geneva", sans-serif;
 }
 
 html,
@@ -16,6 +57,104 @@ body,
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(135deg, 
+    var(--color-fabric-dark) 0%, 
+    var(--color-fabric-base) 50%, 
+    var(--color-fabric-light) 100%);
+  position: relative;
+}
+
+/* Fabric texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      transparent 2px,
+      transparent 4px,
+      rgba(0, 0, 0, 0.03) 6px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      transparent 2px,
+      transparent 4px,
+      rgba(0, 0, 0, 0.03) 6px
+    );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* Noise texture for fabric realism */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* Stamp animation */
+@keyframes stamp-appear {
+  0% {
+    transform: scale(0) rotate(-12deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotate(-12deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(-12deg);
+    opacity: 0.9;
+  }
+}
+
+/* Button press animation */
+@keyframes button-press {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
+/* Modal entrance with rotation */
+@keyframes modal-entrance {
+  0% {
+    transform: scale(0.8) rotate(-5deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Shimmer effect for metallic surfaces */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
