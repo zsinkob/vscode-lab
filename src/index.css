@@ -158,3 +158,74 @@ body::after {
     background-position: 200% center;
   }
 }
+
+/* Float medium - for interactive stickers */
+@keyframes float-medium {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+/* Gentle rotation - for interactive stickers */
+@keyframes rotate-gentle {
+  0%, 100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+/* Wiggle - quick side-to-side */
+@keyframes wiggle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+/* Pop-bounce - bouncy scale effect */
+@keyframes pop-bounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.15);
+  }
+  70% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Fade slide in - entrance animation */
+@keyframes fade-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse glow - glowing box-shadow */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6), 0 3px 10px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
