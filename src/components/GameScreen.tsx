@@ -4,7 +4,6 @@ import { BingoBoard } from './BingoBoard';
 interface GameScreenProps {
   board: BingoSquareData[];
   winningSquareIds: Set<number>;
-  hasBingo: boolean;
   onSquareClick: (squareId: number) => void;
   onReset: () => void;
 }
@@ -12,7 +11,6 @@ interface GameScreenProps {
 export function GameScreen({
   board,
   winningSquareIds,
-  hasBingo,
   onSquareClick,
   onReset,
 }: GameScreenProps) {
@@ -75,24 +73,6 @@ export function GameScreen({
       >
         Tap a square when you find someone who matches it.
       </p>
-
-      {/* Bingo ribbon */}
-      {hasBingo && (
-        <div 
-          className="relative z-10 text-center py-2.5 font-bold text-base"
-          style={{
-            fontFamily: 'var(--font-display)',
-            background: 'linear-gradient(145deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
-            color: '#78350f',
-            textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.2)',
-            borderTop: '2px solid #d97706',
-            borderBottom: '2px solid #d97706',
-          }}
-        >
-          🎉 BINGO! You got a line! 🎉
-        </div>
-      )}
 
       {/* Board */}
       <div className="relative z-10 flex-1 flex items-center justify-center p-3">
