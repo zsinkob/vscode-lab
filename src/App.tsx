@@ -81,7 +81,6 @@ function App() {
       <GameScreen
         board={board}
         winningSquareIds={winningSquareIds}
-        hasBingo={gameState === 'bingo'}
         onSquareClick={handleSquareClick}
         onReset={handleReset}
       />
