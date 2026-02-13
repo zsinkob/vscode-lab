@@ -15,7 +15,7 @@ export interface BingoLine {
 
 export type GameState = 'start' | 'playing' | 'bingo';
 
-export type GameMode = 'bingo' | 'scavenger' | null;
+export type GameMode = 'bingo' | 'scavenger' | 'deck' | null;
 
 export interface ScavengerItem {
   id: number;

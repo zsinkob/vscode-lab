@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
+import { questions } from './data/questions';
 
 describe('App scavenger hunt mode', () => {
   beforeEach(() => {
@@ -12,6 +13,7 @@ describe('App scavenger hunt mode', () => {
 
     expect(screen.getByRole('button', { name: /start bingo/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /start scavenger/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /start card deck/i })).toBeInTheDocument();
   });
 
   it('starts scavenger mode with a checklist and progress meter', () => {
@@ -45,5 +47,20 @@ describe('App scavenger hunt mode', () => {
 
     expect(screen.getByText(/1\s*\/\s*24/i)).toBeInTheDocument();
     expect(firstCheckbox).toBeChecked();
+  });
+
+  it('starts card deck shuffle mode and draws a random question on tap', () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('button', { name: /start card deck/i }));
+
+    expect(screen.getByRole('heading', { name: /card deck shuffle/i })).toBeInTheDocument();
+    expect(screen.getByText(/cards drawn:\s*0/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /draw a random question card/i }));
+
+    const drawnText = screen.getByTestId('deck-card-text').textContent ?? '';
+    expect(questions).toContain(drawnText);
+    expect(screen.getByText(/cards drawn:\s*1/i)).toBeInTheDocument();
   });
 });

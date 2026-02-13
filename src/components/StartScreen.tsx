@@ -1,6 +1,7 @@
 interface StartScreenProps {
   onStartBingo: () => void;
   onStartScavenger: () => void;
+  onStartDeck: () => void;
 }
 
 // Constants for stamp overlay positioning (centered within sticker)
@@ -49,7 +50,7 @@ const colorPalettes = {
   yellow: { light: '#fef3c7', mid: '#fbbf24', dark: '#d97706' },
 };
 
-export function StartScreen({ onStartBingo, onStartScavenger }: StartScreenProps) {
+export function StartScreen({ onStartBingo, onStartScavenger, onStartDeck }: StartScreenProps) {
   return (
     <div className="relative min-h-full overflow-hidden">
       {/* Floating Stickers Layer */}
@@ -296,6 +297,33 @@ export function StartScreen({ onStartBingo, onStartScavenger }: StartScreenProps
             }}
           >
             Start Scavenger
+          </button>
+
+          <button
+            onClick={onStartDeck}
+            className="font-bold py-5 px-10 rounded-xl text-2xl transition-all duration-150"
+            style={{
+              fontFamily: 'var(--font-display)',
+              background: 'linear-gradient(145deg, #a855f7 0%, #9333ea 50%, #7e22ce 100%)',
+              color: 'white',
+              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)',
+              boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+              border: '3px solid #7e22ce',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translateY(4px)';
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 3px 5px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+            }}
+          >
+            Start Card Deck
           </button>
         </div>
       </div>
