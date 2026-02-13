@@ -158,3 +158,65 @@ body::after {
     background-position: 200% center;
   }
 }
+
+/* Chaotic floating animation - aggressive movement */
+@keyframes float-chaotic {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(20px, -25px);
+  }
+  50% {
+    transform: translate(-15px, 30px);
+  }
+  75% {
+    transform: translate(25px, 15px);
+  }
+}
+
+/* Playful spinning animation */
+@keyframes spin-playful {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Continuous bouncing scale animation */
+@keyframes bounce-continuous {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Pop entrance with overshoot */
+@keyframes entrance-pop {
+  0% {
+    transform: scale(0) rotate(-10deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15) rotate(5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Glowing pulse for CTA button */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4);
+  }
+}
