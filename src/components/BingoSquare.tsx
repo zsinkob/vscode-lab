@@ -37,6 +37,15 @@ const getStickerColors = (id: number, isFreeSpace: boolean) => {
 export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
   const colors = getStickerColors(square.id, square.isFreeSpace);
   const stampRotation = getStampRotation(square.id);
+  const promptLength = square.text.length;
+
+  const textSizingClass = square.isFreeSpace
+    ? 'text-[clamp(0.72rem,2.2vw,0.95rem)] leading-tight'
+    : promptLength > 52
+      ? 'text-[clamp(0.5rem,1.5vw,0.62rem)] leading-[1.05]'
+      : promptLength > 40
+        ? 'text-[clamp(0.54rem,1.65vw,0.68rem)] leading-[1.1]'
+        : 'text-[clamp(0.58rem,1.8vw,0.76rem)] leading-[1.15]';
   
   // Base sticker styles - glossy 3D effect
   const baseStyles: React.CSSProperties = {
@@ -63,10 +72,10 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
       disabled={square.isFreeSpace}
       style={{ ...baseStyles, ...shimmerStyles }}
       className={`
-        relative flex items-center justify-center p-2 text-center rounded-xl
+        relative flex items-center justify-center p-1 text-center rounded-xl overflow-hidden
         transition-all duration-200 select-none min-h-[70px]
-        font-body font-semibold leading-tight
-        ${square.isFreeSpace ? 'text-base' : 'text-xs'}
+        font-body font-semibold
+        ${textSizingClass}
         ${!square.isFreeSpace && !square.isMarked ? 'hover:scale-105 hover:-translate-y-1 active:scale-95 active:translate-y-1' : ''}
         ${isWinning ? 'ring-4 ring-yellow-400 ring-opacity-75' : ''}
       `}
@@ -83,7 +92,7 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
       />
       
       {/* Text content */}
-      <span className="relative z-10 px-1 break-words hyphens-auto">
+      <span className="relative z-10 px-0.5 break-words hyphens-auto whitespace-normal max-w-full text-balance">
         {square.text}
       </span>
       
