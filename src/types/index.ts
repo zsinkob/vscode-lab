@@ -14,3 +14,11 @@ export interface BingoLine {
 }
 
 export type GameState = 'start' | 'playing' | 'bingo';
+
+export type GameMode = 'bingo' | 'scavenger' | null;
+
+export interface ScavengerItem {
+  id: number;
+  text: string;
+  isChecked: boolean;
+}

@@ -1,7 +1,12 @@
+import { useCallback, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useBingoGame } from './hooks/useBingoGame';
 import { StartScreen } from './components/StartScreen';
 import { GameScreen } from './components/GameScreen';
 import { BingoModal } from './components/BingoModal';
+import { ScavengerScreen } from './components/ScavengerScreen';
+import type { GameMode, ScavengerItem } from './types';
+import { createScavengerItems, toggleScavengerItem } from './utils/scavengerLogic';
 
 function App() {
   const {
@@ -14,9 +19,50 @@ function App() {
     resetGame,
     dismissModal,
   } = useBingoGame();
+  const [mode, setMode]: [GameMode, Dispatch<SetStateAction<GameMode>>] = useState(
+    gameState === 'start' ? null : 'bingo'
+  );
+  const [scavengerItems, setScavengerItems] = useState<ScavengerItem[]>([]);
 
-  if (gameState === 'start') {
-    return <StartScreen onStart={startGame} />;
+  const handleStartBingo = useCallback(() => {
+    setMode('bingo');
+    startGame();
+  }, [startGame]);
+
+  const handleStartScavenger = useCallback(() => {
+    setMode('scavenger');
+    setScavengerItems(createScavengerItems());
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setMode(null);
+    setScavengerItems([]);
+    resetGame();
+  }, [resetGame]);
+
+  const handleToggleScavengerItem = useCallback((itemId: number) => {
+    setScavengerItems((currentItems: ScavengerItem[]): ScavengerItem[] =>
+      toggleScavengerItem(currentItems, itemId)
+    );
+  }, []);
+
+  if (mode === null) {
+    return (
+      <StartScreen
+        onStartBingo={handleStartBingo}
+        onStartScavenger={handleStartScavenger}
+      />
+    );
+  }
+
+  if (mode === 'scavenger') {
+    return (
+      <ScavengerScreen
+        items={scavengerItems}
+        onToggleItem={handleToggleScavengerItem}
+        onReset={handleReset}
+      />
+    );
   }
 
   return (
@@ -26,7 +72,7 @@ function App() {
         winningSquareIds={winningSquareIds}
         hasBingo={gameState === 'bingo'}
         onSquareClick={handleSquareClick}
-        onReset={resetGame}
+        onReset={handleReset}
       />
       {showBingoModal && (
         <BingoModal onDismiss={dismissModal} />

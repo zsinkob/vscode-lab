@@ -1,5 +1,6 @@
 interface StartScreenProps {
-  onStart: () => void;
+  onStartBingo: () => void;
+  onStartScavenger: () => void;
 }
 
 // Constants for stamp overlay positioning (centered within sticker)
@@ -48,7 +49,7 @@ const colorPalettes = {
   yellow: { light: '#fef3c7', mid: '#fbbf24', dark: '#d97706' },
 };
 
-export function StartScreen({ onStart }: StartScreenProps) {
+export function StartScreen({ onStartBingo, onStartScavenger }: StartScreenProps) {
   return (
     <div className="relative min-h-full overflow-hidden">
       {/* Floating Stickers Layer */}
@@ -241,33 +242,62 @@ export function StartScreen({ onStart }: StartScreenProps) {
           animation: 'entrance-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s both',
         }}
       >
-        <button
-          onClick={onStart}
-          className="font-bold py-5 px-12 rounded-xl text-2xl transition-all duration-150"
-          style={{
-            fontFamily: 'var(--font-display)',
-            background: 'linear-gradient(145deg, #3b82f6 0%, #2563eb 50%, #1e40af 100%)',
-            color: 'white',
-            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)',
-            boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(59, 130, 246, 0.4)',
-            border: '3px solid #1e40af',
-            animation: 'glow-pulse 2s ease-in-out infinite',
-          }}
-          onMouseDown={(e) => {
-            e.currentTarget.style.transform = 'translateY(4px)';
-            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 3px 5px rgba(0, 0, 0, 0.15)';
-          }}
-          onMouseUp={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(59, 130, 246, 0.4)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(59, 130, 246, 0.4)';
-          }}
-        >
-          Start Playing Now!
-        </button>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+          <button
+            onClick={onStartBingo}
+            className="font-bold py-5 px-10 rounded-xl text-2xl transition-all duration-150"
+            style={{
+              fontFamily: 'var(--font-display)',
+              background: 'linear-gradient(145deg, #3b82f6 0%, #2563eb 50%, #1e40af 100%)',
+              color: 'white',
+              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)',
+              boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(59, 130, 246, 0.4)',
+              border: '3px solid #1e40af',
+              animation: 'glow-pulse 2s ease-in-out infinite',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translateY(4px)';
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 3px 5px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(59, 130, 246, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 20px rgba(59, 130, 246, 0.4)';
+            }}
+          >
+            Start Bingo
+          </button>
+
+          <button
+            onClick={onStartScavenger}
+            className="font-bold py-5 px-10 rounded-xl text-2xl transition-all duration-150"
+            style={{
+              fontFamily: 'var(--font-display)',
+              background: 'linear-gradient(145deg, #10b981 0%, #059669 50%, #047857 100%)',
+              color: 'white',
+              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)',
+              boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+              border: '3px solid #047857',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translateY(4px)';
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3), inset 0 3px 5px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+            }}
+          >
+            Start Scavenger
+          </button>
+        </div>
       </div>
     </div>
   );
